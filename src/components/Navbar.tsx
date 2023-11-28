@@ -1,11 +1,20 @@
+'use client';
+
 import { NAV_LINKS } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import Button from './Button';
+import { signInWithPopup } from 'firebase/auth';
+import { auth } from '@/firebase/firebaseConfig';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 const Navbar = () => {
+  const googleAuthHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+    const provider = new GoogleAuthProvider();
+    return await signInWithPopup(auth, provider);
+  };
   return (
     <nav className='flex items-center justify-between mx-auto max-w-[1440px] px-6 relative z-30 py-5'>
       <div className='cursor pointer'>
@@ -35,6 +44,7 @@ const Navbar = () => {
           type='button'
           title='Login'
           icon={<FaGoogle />}
+          onClick={googleAuthHandler}
         ></Button>
       </div>
     </nav>
